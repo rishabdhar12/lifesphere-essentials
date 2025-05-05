@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lifesphere_essentials/core/common/back_button.dart';
+import 'package:lifesphere_essentials/core/common/widgets/elevated_button.dart';
+import 'package:lifesphere_essentials/core/common/widgets/text.dart';
+import 'package:lifesphere_essentials/core/common/widgets/text_form_field.dart';
+import 'package:lifesphere_essentials/core/constants/colors.dart';
+import 'package:lifesphere_essentials/core/constants/strings.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              backButton(
+                context,
+                onPressed: () {
+                  context.pop();
+                },
+              ),
+              const SizedBox(height: 30),
+              textWidget(
+                text: AppStrings.welcome,
+                fontSize: 40,
+                fontWeight: FontWeight.w700,
+                textAlign: TextAlign.start,
+              ),
+              const SizedBox(height: 30),
+              textWidget(
+                text: AppStrings.email,
+                fontSize: 16,
+                color: ColorCodes.lightGreen,
+              ),
+              const SizedBox(height: 6),
+              textFormField(
+                hintText: AppStrings.yourEmail,
+                controller: _emailController,
+                textInputType: TextInputType.emailAddress,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp(r'^[a-zA-Z0-9@.]+$'),
+                  ),
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.invalidEmail;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 18),
+              textWidget(
+                text: AppStrings.password,
+                fontSize: 16,
+                color: ColorCodes.lightGreen,
+              ),
+              const SizedBox(height: 6),
+              textFormField(
+                hintText: AppStrings.yourPassword,
+                controller: _passwordController,
+                textInputType: TextInputType.visiblePassword,
+                inputFormatters: [],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.emptyPassword;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              Center(
+                child: elevatedButton(
+                  width: 190,
+                  height: 45,
+                  onPressed: () async {
+                    /*if (_phoneNumber.text.isNotEmpty) {
+                                  checkUserExist();
+                                } else {
+                                  showSnackBar(context,
+                                      message: AppStrings.invalidPhNumber);
+                                }*/
+                  },
+                  textWidget: textWidget(
+                    text: AppStrings.login,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: ColorCodes.appBackground,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

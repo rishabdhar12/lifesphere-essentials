@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "615927274378",
+    "project_id": "lifesphere-essentials",
+    "storage_bucket": "lifesphere-essentials.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615927274378:android:0ba458e46a084d295c0673",
+        "android_client_info": {
+          "package_name": "com.example.lifesphere_essentials"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD58Si_xjtGUtJmuUAVEeJdsKY7HhGxYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
