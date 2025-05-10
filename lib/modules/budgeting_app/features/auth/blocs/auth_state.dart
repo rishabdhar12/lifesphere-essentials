@@ -28,6 +28,15 @@ class SignUpFinishedState extends AuthState {
   List<Object> get props => [user];
 }
 
+class LoginFinishedState extends AuthState {
+  final UserModel user;
+
+  LoginFinishedState({required this.user});
+
+  @override
+  List<Object> get props => [user];
+}
+
 class AuthError extends AuthState {
   final String message;
 
@@ -45,6 +54,7 @@ class UserExistState extends AuthState {
   @override
   List<Object> get props => [user];
 }
+
 
 // class GoogleAuthenticatedState extends AuthState {
 //   final GoogleUserEntity user;

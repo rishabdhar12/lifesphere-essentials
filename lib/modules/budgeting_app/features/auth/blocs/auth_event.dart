@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/dto/signup_dto.dart';
 
+import '../dto/login_dto.dart';
+
 abstract class AuthEvent extends Equatable {
   @override
   List<Object> get props => [];
@@ -29,4 +31,13 @@ class SignUpEvent extends AuthEvent {
 
   @override
   List<Object> get props => [signUpParams];
+}
+
+class LoginEvent extends AuthEvent {
+  final LoginParams loginParams;
+
+  LoginEvent({required this.loginParams});
+
+  @override
+  List<Object> get props => [loginParams];
 }

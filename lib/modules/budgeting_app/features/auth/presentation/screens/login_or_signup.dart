@@ -30,11 +30,7 @@ class LoginOrSignUpScreen extends StatelessWidget {
               letterSpacing: 1.0,
             ),
             const SizedBox(height: 6),
-            textWidget(
-              text: AppStrings.tagLine,
-              color: ColorCodes.lightGreen,
-              textAlign: TextAlign.center,
-            ),
+            textWidget(text: AppStrings.tagLine, color: ColorCodes.lightGreen, textAlign: TextAlign.center),
             const SizedBox(height: 20),
             elevatedButton(
               width: 207,
@@ -62,16 +58,6 @@ class LoginOrSignUpScreen extends StatelessWidget {
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
                 color: ColorCodes.appBackground,
-              ),
-            ),
-            const SizedBox(height: 30),
-            GestureDetector(
-              onTap: () {},
-              child: textWidget(
-                text: AppStrings.forgotPassword,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: ColorCodes.lightGreen,
               ),
             ),
           ],

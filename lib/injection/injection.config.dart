@@ -1,4 +1,3 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -24,6 +23,8 @@ import '../service/firebase_auth_service/auth_service.dart' as _i376;
 import '../service/firebase_auth_service/auth_service_impl.dart' as _i359;
 import '../service/firestore_service/firestore_service.dart' as _i590;
 import '../service/firestore_service/firestore_service_impl.dart' as _i642;
+import '../service/hive_service/hive_service.dart' as _i686;
+import '../service/hive_service/hive_service_impl.dart' as _i349;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -31,22 +32,26 @@ _i174.GetIt $initGetIt(
   String? environment,
   _i526.EnvironmentFilter? environmentFilter,
 }) {
-  final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
+  final gh = _i526.GetItHelper(
+    getIt,
+    environment,
+    environmentFilter,
+  );
   final firebaseModule = _$FirebaseModule();
   gh.lazySingleton<_i59.FirebaseAuth>(() => firebaseModule.firebaseAuth);
   gh.lazySingleton<_i974.FirebaseFirestore>(() => firebaseModule.firestore);
+  gh.factory<_i686.HiveService<dynamic>>(
+      () => _i349.HiveServiceImpl<dynamic>());
   gh.factory<_i590.FirestoreService>(
-    () => _i642.FirestoreServiceImpl(gh<_i974.FirebaseFirestore>()),
-  );
+      () => _i642.FirestoreServiceImpl(gh<_i974.FirebaseFirestore>()));
   gh.factory<_i376.AuthService>(
-    () => _i359.AuthServiceImpl(gh<_i59.FirebaseAuth>()),
-  );
-  gh.factory<_i637.AuthRepository>(
-    () => _i178.AuthRepositoryImpl(gh<_i376.AuthService>()),
-  );
+      () => _i359.AuthServiceImpl(gh<_i59.FirebaseAuth>()));
+  gh.factory<_i637.AuthRepository>(() => _i178.AuthRepositoryImpl(
+        gh<_i376.AuthService>(),
+        gh<_i590.FirestoreService>(),
+      ));
   gh.factory<_i680.AuthBloc>(
-    () => _i680.AuthBloc(authRepository: gh<_i637.AuthRepository>()),
-  );
+      () => _i680.AuthBloc(authRepository: gh<_i637.AuthRepository>()));
   return getIt;
 }
 

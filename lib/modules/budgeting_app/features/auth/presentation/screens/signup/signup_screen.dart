@@ -25,8 +25,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
@@ -37,18 +36,13 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void checkUserExist() {
-    context.read<AuthBloc>().add(
-      CheckUserExistEvent(email: _emailController.text.trim()),
-    );
+    context.read<AuthBloc>().add(CheckUserExistEvent(email: _emailController.text.trim()));
   }
 
   void signUp() {
     context.read<AuthBloc>().add(
       SignUpEvent(
-        signUpParams: SignUpParams(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        ),
+        signUpParams: SignUpParams(email: _emailController.text.trim(), password: _passwordController.text.trim()),
       ),
     );
   }
@@ -77,28 +71,16 @@ class _SignupScreenState extends State<SignupScreen> {
                 textAlign: TextAlign.start,
               ),
               const SizedBox(height: 30),
-              textWidget(
-                text: AppStrings.email,
-                fontSize: 16,
-                color: ColorCodes.lightGreen,
-              ),
+              textWidget(text: AppStrings.email, fontSize: 16, color: ColorCodes.lightGreen),
               const SizedBox(height: 6),
               textFormField(
                 hintText: AppStrings.yourEmail,
                 controller: _emailController,
                 textInputType: TextInputType.emailAddress,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^[a-zA-Z0-9@.]+$'),
-                  ),
-                ],
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9@.]+$'))],
               ),
               const SizedBox(height: 18),
-              textWidget(
-                text: AppStrings.password,
-                fontSize: 16,
-                color: ColorCodes.lightGreen,
-              ),
+              textWidget(text: AppStrings.password, fontSize: 16, color: ColorCodes.lightGreen),
               const SizedBox(height: 6),
               textFormField(
                 hintText: AppStrings.yourPassword,
@@ -107,11 +89,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 inputFormatters: [],
               ),
               const SizedBox(height: 18),
-              textWidget(
-                text: AppStrings.confirmPassword,
-                fontSize: 16,
-                color: ColorCodes.lightGreen,
-              ),
+              textWidget(text: AppStrings.confirmPassword, fontSize: 16, color: ColorCodes.lightGreen),
               const SizedBox(height: 6),
               textFormField(
                 hintText: AppStrings.oneMoreTime,
@@ -124,51 +102,27 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is AuthError) {
-                      showSnackBar(
-                        context,
-                        message: state.message,
-                        isError: true,
-                      );
+                      showSnackBar(context, message: state.message, isError: true);
                     } else if (state is SignUpFinishedState) {
                       showSnackBar(context, message: "Successfully signed up");
                     }
                   },
                   builder: (context, state) {
                     if (state is AuthLoading) {
-                      return const CupertinoActivityIndicator(
-                        radius: 20,
-                        color: ColorCodes.splashBackground,
-                      );
+                      return const CupertinoActivityIndicator(radius: 20, color: ColorCodes.splashBackground);
                     }
                     return elevatedButton(
                       width: 190,
                       height: 45,
                       onPressed: () async {
                         if (_emailController.text.isEmpty) {
-                          showSnackBar(
-                            context,
-                            message: AppStrings.invalidEmail,
-                            isError: true,
-                          );
+                          showSnackBar(context, message: AppStrings.invalidEmail, isError: true);
                         } else if (_passwordController.text.isEmpty) {
-                          showSnackBar(
-                            context,
-                            message: AppStrings.emptyPassword,
-                            isError: true,
-                          );
+                          showSnackBar(context, message: AppStrings.emptyPassword, isError: true);
                         } else if (_confirmPasswordController.text.isEmpty) {
-                          showSnackBar(
-                            context,
-                            message: AppStrings.emptyPassword,
-                            isError: true,
-                          );
-                        } else if (_passwordController.text !=
-                            _confirmPasswordController.text) {
-                          showSnackBar(
-                            context,
-                            message: AppStrings.passwordMismatch,
-                            isError: true,
-                          );
+                          showSnackBar(context, message: AppStrings.emptyPassword, isError: true);
+                        } else if (_passwordController.text != _confirmPasswordController.text) {
+                          showSnackBar(context, message: AppStrings.passwordMismatch, isError: true);
                         } else {
                           signUp();
                         }

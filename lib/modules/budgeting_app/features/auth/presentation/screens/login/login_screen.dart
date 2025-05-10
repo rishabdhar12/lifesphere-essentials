@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifesphere_essentials/core/common/back_button.dart';
 import 'package:lifesphere_essentials/core/common/widgets/elevated_button.dart';
@@ -7,6 +9,11 @@ import 'package:lifesphere_essentials/core/common/widgets/text.dart';
 import 'package:lifesphere_essentials/core/common/widgets/text_form_field.dart';
 import 'package:lifesphere_essentials/core/constants/colors.dart';
 import 'package:lifesphere_essentials/core/constants/strings.dart';
+import 'package:lifesphere_essentials/core/utils/snackbar.dart';
+import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/blocs/auth_bloc.dart';
+import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/blocs/auth_event.dart';
+import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/blocs/auth_state.dart';
+import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/dto/login_dto.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,6 +25,24 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void login() {
+    context.read<AuthBloc>().add(
+      LoginEvent(
+        loginParams: LoginParams(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,23 +111,54 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 24),
               Center(
-                child: elevatedButton(
-                  width: 190,
-                  height: 45,
-                  onPressed: () async {
-                    /*if (_phoneNumber.text.isNotEmpty) {
-                                  checkUserExist();
-                                } else {
-                                  showSnackBar(context,
-                                      message: AppStrings.invalidPhNumber);
-                                }*/
+                child: BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthError) {
+                      showSnackBar(
+                        context,
+                        message: state.message,
+                        isError: true,
+                      );
+                    } else if (state is LoginFinishedState) {
+                      showSnackBar(context, message: "Successfully logged in");
+                      // context.pushReplacement(RouteNames.homeScreen);
+                    }
                   },
-                  textWidget: textWidget(
-                    text: AppStrings.login,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: ColorCodes.appBackground,
-                  ),
+                  builder: (context, state) {
+                    if (state is AuthLoading) {
+                      return const CupertinoActivityIndicator(
+                        radius: 20,
+                        color: ColorCodes.splashBackground,
+                      );
+                    }
+                    return elevatedButton(
+                      width: 190,
+                      height: 45,
+                      onPressed: () async {
+                        if (_emailController.text.isEmpty) {
+                          showSnackBar(
+                            context,
+                            message: AppStrings.invalidEmail,
+                            isError: true,
+                          );
+                        } else if (_passwordController.text.isEmpty) {
+                          showSnackBar(
+                            context,
+                            message: AppStrings.emptyPassword,
+                            isError: true,
+                          );
+                        } else {
+                          login();
+                        }
+                      },
+                      textWidget: textWidget(
+                        text: AppStrings.login,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: ColorCodes.appBackground,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

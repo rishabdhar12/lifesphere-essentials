@@ -2,16 +2,19 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lifesphere_essentials/core/error/failure.dart';
+import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/dto/login_dto.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/dto/signup_dto.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/models/user_model.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/repo/auth_repository.dart';
 import 'package:lifesphere_essentials/service/firebase_auth_service/auth_service.dart';
+import 'package:lifesphere_essentials/service/firestore_service/firestore_service.dart';
 
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
+  final FirestoreService _firestoreService;
 
-  AuthRepositoryImpl(this._authService);
+  AuthRepositoryImpl(this._authService, this._firestoreService);
 
   @override
   Future<Either<Failure, UserModel>> signup(SignUpParams params) async {
@@ -28,13 +31,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<Failure, UserModel>> login(LoginParams loginParams) async {
     return await _authService.signInWithEmailAndPassword(
-      email: email,
-      password: password,
+      email: loginParams.email,
+      password: loginParams.password,
     );
   }
 
@@ -54,5 +54,17 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, void>> sendPasswordResetEmail(String email) async {
     return await _authService.sendPasswordResetEmail(email);
+  }
+
+  @override
+  Future<Either<Failure, void>> createAuthDocument({
+    required String email,
+    required String uid,
+  }) {
+    return _firestoreService.createDocument(
+      collectionPath: 'users',
+      docId: uid,
+      data: {'email': email, 'uid': uid, 'createdAt': DateTime.now()},
+    );
   }
 }

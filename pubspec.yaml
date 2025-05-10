@@ -23,21 +23,20 @@ dependencies:
   fpdart:
   shared_preferences:
   go_router:
-  logger:
   firebase_core:
   flutter_svg:
   google_fonts:
-  smooth_page_indicator:
   firebase_remote_config:
   firebase_auth:
   path_provider:
   cloud_firestore:
-  percent_indicator:
   syncfusion_flutter_datepicker:
   new_version_plus:
   package_info_plus:
   syncfusion_flutter_charts:
   google_sign_in:
+  hive:
+  hive_flutter:
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +45,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   injectable_generator:
   build_runner:
+  hive_generator:
 
 flutter:
   uses-material-design: true
