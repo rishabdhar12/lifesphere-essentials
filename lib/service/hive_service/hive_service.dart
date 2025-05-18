@@ -1,6 +1,9 @@
-import 'package:hive/hive.dart';
+import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/models/user_model.dart';
 
-abstract class HiveService<T> {
-  Future<Box<T>> openBox({required String boxName});
-  Future<void> deleteBox({required String boxName});
+abstract class HiveService {
+  Future<void> addUser({required String uid, required String email});
+
+  Future<void> deleteUser();
+
+  Future<UserModel> getUser();
 }

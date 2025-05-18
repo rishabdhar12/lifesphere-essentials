@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +8,8 @@ import 'package:lifesphere_essentials/core/constants/asset_string.dart';
 import 'package:lifesphere_essentials/core/constants/colors.dart';
 import 'package:lifesphere_essentials/core/constants/route_names.dart';
 import 'package:lifesphere_essentials/core/constants/strings.dart';
+import 'package:lifesphere_essentials/injection/injection.dart';
+import 'package:lifesphere_essentials/service/hive_service/hive_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,6 +19,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final _userHiveService = getIt<HiveService>();
+
   @override
   void initState() {
     super.initState();
@@ -22,11 +28,21 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToLoginOrSignupScreen() {
-    Future.delayed(const Duration(seconds: 2), () async {
-      if (context.mounted) {
-        context.pushReplacement(RouteNames.loginOrSignup);
-      }
-    });
+    _userHiveService
+        .getUser()
+        .then((user) {
+          context.pushReplacement(RouteNames.categoriesScreen);
+        })
+        .catchError((error) {
+          log("Error getting user: $error");
+          context.pushReplacement(RouteNames.loginOrSignup);
+        });
+
+    // Future.delayed(const Duration(seconds: 2), () async {
+    //   if (context.mounted) {
+    //     context.pushReplacement(RouteNames.loginOrSignup);
+    //   }
+    // });
   }
 
   @override

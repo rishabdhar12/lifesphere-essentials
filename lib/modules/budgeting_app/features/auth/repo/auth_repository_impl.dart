@@ -2,6 +2,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lifesphere_essentials/core/error/failure.dart';
+import 'package:lifesphere_essentials/injection/injection.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/dto/login_dto.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/dto/signup_dto.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/models/user_model.dart';
@@ -11,10 +12,10 @@ import 'package:lifesphere_essentials/service/firestore_service/firestore_servic
 
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthService _authService;
-  final FirestoreService _firestoreService;
+  final _authService = getIt<AuthService>();
+  final _firestoreService = getIt<FirestoreService>();
 
-  AuthRepositoryImpl(this._authService, this._firestoreService);
+  AuthRepositoryImpl();
 
   @override
   Future<Either<Failure, UserModel>> signup(SignUpParams params) async {

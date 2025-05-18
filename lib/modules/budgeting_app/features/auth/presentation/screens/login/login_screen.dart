@@ -8,12 +8,15 @@ import 'package:lifesphere_essentials/core/common/widgets/elevated_button.dart';
 import 'package:lifesphere_essentials/core/common/widgets/text.dart';
 import 'package:lifesphere_essentials/core/common/widgets/text_form_field.dart';
 import 'package:lifesphere_essentials/core/constants/colors.dart';
+import 'package:lifesphere_essentials/core/constants/route_names.dart';
 import 'package:lifesphere_essentials/core/constants/strings.dart';
 import 'package:lifesphere_essentials/core/utils/snackbar.dart';
+import 'package:lifesphere_essentials/injection/injection.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/blocs/auth_bloc.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/blocs/auth_event.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/blocs/auth_state.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/dto/login_dto.dart';
+import 'package:lifesphere_essentials/service/hive_service/hive_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,6 +26,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _userHiveService = getIt<HiveService>();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -121,7 +126,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     } else if (state is LoginFinishedState) {
                       showSnackBar(context, message: "Successfully logged in");
-                      // context.pushReplacement(RouteNames.homeScreen);
+
+                      _userHiveService
+                          .addUser(
+                            uid: state.user.uid,
+                            email: _emailController.text.trim(),
+                          )
+                          .whenComplete(() {
+                            context.pushReplacement(RouteNames.dashboardScreen);
+                          });
                     }
                   },
                   builder: (context, state) {

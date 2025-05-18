@@ -26,8 +26,9 @@ abstract class AppStrings {
   static const String submit = "Submit";
   static const String resendOTP = "Resend OTP";
   static const String categories = "Categories";
-  static const String categoriesText1 = "Here are some suggestions";
-  static const String categoriesText2 = "You can always add/edit them later";
+  static const String categoriesText1 = "Let's set up your categories";
+  static const String categoriesText2 =
+      "Here are some suggestions to get you started";
   static const String otpSent = "OTP sent to phone number";
   static const String loggedIn = "You are logged in";
   static const String userExists = "User already exists, log in to continue";

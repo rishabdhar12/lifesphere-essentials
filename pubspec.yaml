@@ -37,6 +37,8 @@ dependencies:
   google_sign_in:
   hive:
   hive_flutter:
+  realm:
+  json_annotation:
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +48,7 @@ dev_dependencies:
   injectable_generator:
   build_runner:
   hive_generator:
+  json_serializable:
 
 flutter:
   uses-material-design: true
