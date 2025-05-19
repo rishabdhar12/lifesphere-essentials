@@ -27,3 +27,15 @@ class CategoriesError extends CategoriesState {
   @override
   List<Object?> get props => [message];
 }
+
+class CategoriesAllocatedState extends CategoriesState {
+  final String message;
+
+  CategoriesAllocatedState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+
+// TODO: category delete state

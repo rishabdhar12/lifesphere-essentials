@@ -26,6 +26,8 @@ import '../modules/budgeting_app/features/categories/repo/categories_repo.dart'
     as _i878;
 import '../modules/budgeting_app/features/categories/repo/categories_repo_impl.dart'
     as _i321;
+import '../service/database_service/database_service.dart' as _i1054;
+import '../service/database_service/database_service_impl.dart' as _i771;
 import '../service/firebase_auth_service/auth_service.dart' as _i376;
 import '../service/firebase_auth_service/auth_service_impl.dart' as _i359;
 import '../service/firebase_remote_config_service/fireabse_remote_config_service_impl.dart'
@@ -36,8 +38,6 @@ import '../service/firestore_service/firestore_service.dart' as _i590;
 import '../service/firestore_service/firestore_service_impl.dart' as _i642;
 import '../service/hive_service/hive_service.dart' as _i686;
 import '../service/hive_service/hive_service_impl.dart' as _i349;
-import '../service/realm_service/realm_service.dart' as _i60;
-import '../service/realm_service/realm_service_impl.dart' as _i610;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 _i174.GetIt $initGetIt(
@@ -60,7 +60,7 @@ _i174.GetIt $initGetIt(
   gh.factory<_i637.AuthRepository>(() => _i178.AuthRepositoryImpl());
   gh.factory<_i680.AuthBloc>(
       () => _i680.AuthBloc(authRepository: gh<_i637.AuthRepository>()));
-  gh.factory<_i60.RealmService>(() => _i610.RealmServiceImpl());
+  gh.singleton<_i1054.DatabaseService>(() => _i771.SembastDatabaseService());
   gh.factory<_i878.CategoriesRepo>(() => _i321.CategoriesRepoImpl());
   gh.factory<_i686.HiveService>(() => _i349.HiveServiceImpl());
   gh.factory<_i590.FirestoreService>(
