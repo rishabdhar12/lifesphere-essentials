@@ -6,11 +6,13 @@ import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/presen
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/presentation/screens/login_or_signup.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/presentation/screens/signup/signup_screen.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/auth/presentation/screens/splash_screen.dart';
-import 'package:lifesphere_essentials/modules/budgeting_app/features/categories/presentation/screens/allocation_screen.dart';
-import 'package:lifesphere_essentials/modules/budgeting_app/features/categories/presentation/screens/categories.dart';
+import 'package:lifesphere_essentials/modules/budgeting_app/features/categories/presentation/screens/categories_screen.dart';
 import 'package:lifesphere_essentials/modules/budgeting_app/features/dashboard/presentation/screens/dashboard_screen.dart';
 
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final GoRouter router = GoRouter(
+  navigatorKey: rootNavigatorKey,
   routes: [
     GoRoute(
       path: RouteNames.splash,
@@ -65,16 +67,6 @@ final GoRouter router = GoRouter(
             context: context,
             state: state,
             child: const CategoriesScreen(),
-            type: 'slide-right-to-left',
-          ),
-    ),
-    GoRoute(
-      path: RouteNames.allocationScreen,
-      pageBuilder:
-          (context, state) => RouterTransitionFactory.getTransitionPage(
-            context: context,
-            state: state,
-            child: const AllocationScreen(),
             type: 'slide-right-to-left',
           ),
     ),

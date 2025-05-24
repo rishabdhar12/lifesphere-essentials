@@ -26,8 +26,8 @@ import '../modules/budgeting_app/features/categories/repo/categories_repo.dart'
     as _i878;
 import '../modules/budgeting_app/features/categories/repo/categories_repo_impl.dart'
     as _i321;
-import '../service/database_service/database_service.dart' as _i1054;
-import '../service/database_service/database_service_impl.dart' as _i771;
+import '../service/db_service/db_service.dart' as _i728;
+import '../service/db_service/db_service_impl.dart' as _i917;
 import '../service/firebase_auth_service/auth_service.dart' as _i376;
 import '../service/firebase_auth_service/auth_service_impl.dart' as _i359;
 import '../service/firebase_remote_config_service/fireabse_remote_config_service_impl.dart'
@@ -60,8 +60,8 @@ _i174.GetIt $initGetIt(
   gh.factory<_i637.AuthRepository>(() => _i178.AuthRepositoryImpl());
   gh.factory<_i680.AuthBloc>(
       () => _i680.AuthBloc(authRepository: gh<_i637.AuthRepository>()));
-  gh.singleton<_i1054.DatabaseService>(() => _i771.SembastDatabaseService());
   gh.factory<_i878.CategoriesRepo>(() => _i321.CategoriesRepoImpl());
+  gh.singleton<_i728.DatabaseService>(() => _i917.DatabaseServiceImpl());
   gh.factory<_i686.HiveService>(() => _i349.HiveServiceImpl());
   gh.factory<_i590.FirestoreService>(
       () => _i642.FirestoreServiceImpl(gh<_i974.FirebaseFirestore>()));

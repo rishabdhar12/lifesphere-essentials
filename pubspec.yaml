@@ -39,6 +39,7 @@ dependencies:
   hive_flutter:
   sembast:
   uuid:
+  sqflite:
 
 dev_dependencies:
   flutter_test:
